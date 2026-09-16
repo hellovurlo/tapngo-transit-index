@@ -41,11 +41,25 @@ async function main() {
   const stopsRaw = parse(fs.readFileSync('./gtfs-nl/stops.txt'), { columns: true, skip_empty_lines: true });
   const stops = new Map(); // stop_id -> { id, name, town, lat, lon, modes:Set }
   for (const row of stopsRaw) {
-    // Dutch GTFS stop_name convention is usually "Town, Stop Name".
-    const raw = row.stop_name || '';
-    const commaIdx = raw.indexOf(',');
-    const town = commaIdx > -1 ? raw.slice(0, commaIdx).trim() : null;
-    const name = commaIdx > -1 ? raw.slice(commaIdx + 1).trim() : raw.trim();
+    // Real-world GTFS-NL naming is inconsistent: some entries are "Town, Stop Name",
+    // others are "Stop Name, [Town] extra description". Bracketed text is the
+    // reliable town signal wherever it appears; fall back to the comma-split
+    // heuristic only when there's no bracket, and to "no comma at all" for plain
+    // station names (e.g. "Almere Buiten") where the name itself IS the place.
+    const raw = (row.stop_name || '').trim();
+    const bracketMatch = raw.match(/\[([^\]]+)\]/);
+    let town, name;
+    if (bracketMatch) {
+      town = bracketMatch[1].trim();
+      name = raw.replace(/\[[^\]]+\]/, '').replace(/^,\s*|,\s*$/g, '').trim() || town;
+    } else if (raw.includes(',')) {
+      const commaIdx = raw.indexOf(',');
+      town = raw.slice(0, commaIdx).trim();
+      name = raw.slice(commaIdx + 1).trim();
+    } else {
+      town = raw; // plain station names double as their own town, e.g. "Almere Buiten"
+      name = raw;
+    }
     stops.set(row.stop_id, {
       id: row.stop_id,
       name: name || raw,
