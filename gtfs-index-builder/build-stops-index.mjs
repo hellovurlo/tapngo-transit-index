@@ -68,6 +68,7 @@ async function main() {
       lon: parseFloat(row.stop_lon),
       modes: new Set(),
       lines: new Set(),
+      agencies: new Set(),
       stopCode: row.stop_code || null, // operator-facing code, if this feed provides one
     });
   }
@@ -76,6 +77,7 @@ async function main() {
   const routesRaw = parse(fs.readFileSync('./gtfs-nl/routes.txt'), { columns: true, skip_empty_lines: true });
   const routeType = new Map(routesRaw.map(r => [r.route_id, r.route_type]));
   const routeShortName = new Map(routesRaw.map(r => [r.route_id, r.route_short_name || r.route_long_name || '']));
+  const routeAgency = new Map(routesRaw.map(r => [r.route_id, r.agency_id || '']));
   const tripsRaw = parse(fs.readFileSync('./gtfs-nl/trips.txt'), { columns: true, skip_empty_lines: true });
   const tripRoute = new Map(tripsRaw.map(t => [t.trip_id, t.route_id]));
   const tripHeadsign = new Map(tripsRaw.map(t => [t.trip_id, t.trip_headsign || '']));
@@ -105,6 +107,8 @@ async function main() {
       stop.modes.add(mapRouteType(rt));
       const shortName = routeShortName.get(routeId);
       if (shortName) stop.lines.add(shortName); // real line numbers/names actually serving this stop
+      const agencyId = routeAgency.get(routeId);
+      if (agencyId) stop.agencies.add(agencyId);
     }
   }
 
@@ -120,6 +124,7 @@ async function main() {
       lat: s.lat,
       lon: s.lon,
       stopCode: s.stopCode || null, // operator-facing code, used below to auto-match a live TPC
+      agencies: [...s.agencies], // which operators actually serve this stop, for scoped code matching
     }));
 
   console.log('Attempting automatic OVapi code matching via NDOV CHB PassengerStopAssignment...');
@@ -146,28 +151,49 @@ async function main() {
       chbXml = chbBuf.toString('utf8'); // wasn't actually gzipped
     }
 
-    // Extract <quay><quaycode>NL:Q:XXXXXXXX</quaycode> ... <userstopcode>YYYY</userstopcode>
-    // blocks via regex rather than a full XML parse — the file is large and this
-    // structure is stable per NDOV's documented format.
-    const stopCodeToTpc = new Map();
+    // Extract <quay><quaycode>NL:Q:XXXXXXXX</quaycode> ... <dataownercode>YYY</dataownercode>
+    // <userstopcode>ZZZZ</userstopcode> blocks via regex rather than a full XML parse.
+    // Keyed two ways: scoped by operator (accurate — each operator has its own
+    // numbering) and a flat fallback (the old behavior) for cases where the
+    // GTFS feed's agency_id doesn't line up with CHB's dataownercode spelling.
+    const scopedMap = new Map();   // "AGENCY:code" -> TPC
+    const flatMap = new Map();     // code -> TPC (last writer wins, old behavior)
     const quayBlocks = chbXml.split('<quay>').slice(1);
     for (const block of quayBlocks) {
       const quayMatch = block.match(/<quaycode>NL:Q:(\d+)<\/quaycode>/);
       if (!quayMatch) continue;
       const tpc = quayMatch[1];
-      const userStopMatches = [...block.matchAll(/<userstopcode>(\d+)<\/userstopcode>/g)];
-      for (const usm of userStopMatches) {
-        stopCodeToTpc.set(usm[1], tpc); // last writer wins if a code repeats across operators
+      const assignmentBlocks = block.split('<userstopcodedata>').slice(1);
+      for (const asg of assignmentBlocks) {
+        const ownerMatch = asg.match(/<dataownercode>([^<]+)<\/dataownercode>/);
+        const codeMatch = asg.match(/<userstopcode>(\d+)<\/userstopcode>/);
+        if (!codeMatch) continue;
+        flatMap.set(codeMatch[1], tpc);
+        if (ownerMatch) {
+          scopedMap.set(`${ownerMatch[1].toUpperCase()}:${codeMatch[1]}`, tpc);
+        }
       }
     }
-    console.log(`  CHB file yielded ${stopCodeToTpc.size} userstopcode -> TPC mappings`);
+    console.log(`  CHB file yielded ${scopedMap.size} operator-scoped and ${flatMap.size} flat userstopcode -> TPC mappings`);
 
+    let scopedMatched = 0, flatFallbackMatched = 0;
     for (const s of out) {
-      if (s.stopCode && stopCodeToTpc.has(s.stopCode)) {
-        s.ovapiCodeAuto = stopCodeToTpc.get(s.stopCode);
-        autoMatched++;
+      if (!s.stopCode) continue;
+      let found = null;
+      for (const agency of s.agencies) {
+        const hit = scopedMap.get(`${agency.toUpperCase()}:${s.stopCode}`);
+        if (hit) { found = hit; break; }
+      }
+      if (found) {
+        s.ovapiCodeAuto = found;
+        scopedMatched++;
+      } else if (flatMap.has(s.stopCode)) {
+        s.ovapiCodeAuto = flatMap.get(s.stopCode);
+        flatFallbackMatched++;
       }
     }
+    autoMatched = scopedMatched + flatFallbackMatched;
+    console.log(`  ${scopedMatched} matched via operator-scoped lookup (high confidence), ${flatFallbackMatched} via flat fallback (lower confidence)`);
     fs.rmSync('./chb.xml.gz');
   } catch (e) {
     console.log('  CHB auto-matching failed, continuing without it:', e.message);
