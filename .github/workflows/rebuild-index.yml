@@ -1,0 +1,33 @@
+name: Rebuild Dutch stops index
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # every night at 03:00 UTC — GTFS-NL updates roughly daily
+  workflow_dispatch: {}     # lets you trigger it manually from the Actions tab too
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./gtfs-index-builder
+        run: npm install
+
+      - name: Build stops index
+        working-directory: ./gtfs-index-builder
+        run: npm run build
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gtfs-index-builder/public
+          publish_branch: gh-pages
