@@ -134,9 +134,47 @@ async function main() {
     group.times.push({ t: depTime.slice(0,5), days });
   }
 
+  console.log('Merging same-name/town stop pairs (opposite sides of the road) so');
+  console.log('picking a stop shows every direction, not just one physical side...');
+  const clusters = new Map(); // "town|||name" -> [stopId, stopId, ...]
+  for (const s of stops.values()) {
+    if (s.modes.size === 0) continue; // skip inactive stops entirely
+    const key = `${s.town.toLowerCase()}|||${s.name.toLowerCase()}`;
+    if (!clusters.has(key)) clusters.set(key, []);
+    clusters.get(key).push(s.id);
+  }
+  const canonicalIdFor = new Map(); // any member stop_id -> the chosen canonical stop_id
+  for (const members of clusters.values()) {
+    const canonical = members.slice().sort()[0]; // deterministic pick
+    for (const id of members) canonicalIdFor.set(id, canonical);
+  }
+  // Merge every member's schedule and line/mode data into the canonical stop.
+  const mergedSchedules = new Map(); // canonical stop_id -> Map(key -> group)
+  for (const [stopId, perStop] of stopSchedules.entries()) {
+    const canonical = canonicalIdFor.get(stopId) || stopId;
+    if (!mergedSchedules.has(canonical)) mergedSchedules.set(canonical, new Map());
+    const target = mergedSchedules.get(canonical);
+    for (const [key, group] of perStop.entries()) {
+      if (!target.has(key)) {
+        target.set(key, { route: group.route, headsignCounts: new Map(group.headsignCounts), mode: group.mode, times: [...group.times] });
+      } else {
+        const t = target.get(key);
+        t.times.push(...group.times);
+        for (const [hs, c] of group.headsignCounts.entries()) t.headsignCounts.set(hs, (t.headsignCounts.get(hs) || 0) + c);
+      }
+    }
+  }
+  for (const [stopId, canonical] of canonicalIdFor.entries()) {
+    if (stopId === canonical) continue;
+    const src = stops.get(stopId), dst = stops.get(canonical);
+    if (src && dst) { for (const m of src.modes) dst.modes.add(m); for (const l of src.lines) dst.lines.add(l); }
+  }
+
   console.log('Writing search index (stops-nl.json)...');
-  const stopsOut = [...stops.values()]
-    .filter(s => s.modes.size > 0)
+  const stopsOut = [...canonicalIdFor.values()]
+    .filter((id, i, arr) => arr.indexOf(id) === i) // unique canonical ids only — duplicates are dropped from search
+    .map(id => stops.get(id))
+    .filter(s => s && s.modes.size > 0)
     .map(s => ({
       id: s.id, name: s.name, town: s.town,
       mode: [...s.modes][0], lines: [...s.lines].sort().slice(0, 12),
@@ -144,15 +182,13 @@ async function main() {
     }));
   fs.mkdirSync('./public', { recursive: true });
   fs.writeFileSync(STOPS_OUT, JSON.stringify(stopsOut));
-  console.log(`  Wrote ${stopsOut.length} stops.`);
+  console.log(`  Wrote ${stopsOut.length} stops (merged from ${stops.size} physical stop records).`);
 
   console.log('Writing per-stop timetables (public/schedules/*.json)...');
   fs.mkdirSync(SCHEDULES_DIR, { recursive: true });
   let scheduleFileCount = 0;
-  for (const [stopId, perStop] of stopSchedules.entries()) {
+  for (const [stopId, perStop] of mergedSchedules.entries()) {
     const lines = [...perStop.values()].map(l => {
-      // Pick the most common headsign in this direction group as the label —
-      // resilient to occasional inconsistent wording on individual trips.
       let bestHeadsign = '', bestCount = -1;
       for (const [hs, count] of l.headsignCounts.entries()) {
         if (count > bestCount) { bestHeadsign = hs; bestCount = count; }
@@ -166,7 +202,7 @@ async function main() {
     scheduleFileCount++;
   }
   console.log(`  Wrote ${scheduleFileCount} schedule files.`);
-  console.log('Done. Every stop now has a real timetable — no live code required to see next departures.');
+  console.log('Done. Every stop now has a real, merged timetable — no live code required to see next departures.');
 
   fs.rmSync('./gtfs-nl.zip');
   fs.rmSync('./gtfs-nl', { recursive: true, force: true });
