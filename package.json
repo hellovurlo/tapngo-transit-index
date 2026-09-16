@@ -1,0 +1,13 @@
+{
+  "name": "tapngo-gtfs-index-builder",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Builds a compact, searchable JSON of every Dutch transit stop from the free GTFS-NL feed.",
+  "scripts": {
+    "build": "node build-stops-index.mjs"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "csv-parse": "^5.5.5"
+  }
+}
