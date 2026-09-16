@@ -86,6 +86,7 @@ async function main() {
   const tripRoute = new Map(tripsRaw.map(t => [t.trip_id, t.route_id]));
   const tripService = new Map(tripsRaw.map(t => [t.trip_id, t.service_id]));
   const tripHeadsign = new Map(tripsRaw.map(t => [t.trip_id, t.trip_headsign || '']));
+  const tripDirection = new Map(tripsRaw.map(t => [t.trip_id, t.direction_id]));
 
   console.log('Streaming stop_times.txt (the big file) — building per-stop timetables...');
   // stopSchedules: stop_id -> Map("route|headsign" -> { route, headsign, mode, times: [{t, days}] })
@@ -115,13 +116,22 @@ async function main() {
     stop.lines.add(shortName);
 
     const headsign = tripHeadsign.get(tripId) || '';
-    const days = serviceDays.get(tripService.get(tripId)) || [true,true,true,true,true,true,true]; // unknown pattern -> assume runs daily rather than hide it
+    const directionId = tripDirection.get(tripId);
+    const days = serviceDays.get(tripService.get(tripId)) || [true,true,true,true,true,true,true];
 
     if (!stopSchedules.has(stopId)) stopSchedules.set(stopId, new Map());
     const perStop = stopSchedules.get(stopId);
-    const key = `${shortName}|${headsign}`;
-    if (!perStop.has(key)) perStop.set(key, { route: shortName, headsign, mode, times: [] });
-    perStop.get(key).times.push({ t: depTime.slice(0,5), days });
+    // Group by GTFS direction_id (a stable 0/1 flag), not by headsign text —
+    // operators are inconsistent with headsign wording across trips/snapshots,
+    // which fragments what should be one direction into several. Fall back to
+    // headsign grouping only if this feed doesn't provide direction_id at all.
+    const key = (directionId === '0' || directionId === '1')
+      ? `${shortName}|dir${directionId}`
+      : `${shortName}|${headsign}`;
+    if (!perStop.has(key)) perStop.set(key, { route: shortName, headsignCounts: new Map(), mode, times: [] });
+    const group = perStop.get(key);
+    group.headsignCounts.set(headsign, (group.headsignCounts.get(headsign) || 0) + 1);
+    group.times.push({ t: depTime.slice(0,5), days });
   }
 
   console.log('Writing search index (stops-nl.json)...');
@@ -140,10 +150,18 @@ async function main() {
   fs.mkdirSync(SCHEDULES_DIR, { recursive: true });
   let scheduleFileCount = 0;
   for (const [stopId, perStop] of stopSchedules.entries()) {
-    const lines = [...perStop.values()].map(l => ({
-      ...l,
-      times: l.times.sort((a,b) => a.t.localeCompare(b.t)),
-    }));
+    const lines = [...perStop.values()].map(l => {
+      // Pick the most common headsign in this direction group as the label —
+      // resilient to occasional inconsistent wording on individual trips.
+      let bestHeadsign = '', bestCount = -1;
+      for (const [hs, count] of l.headsignCounts.entries()) {
+        if (count > bestCount) { bestHeadsign = hs; bestCount = count; }
+      }
+      return {
+        route: l.route, headsign: bestHeadsign, mode: l.mode,
+        times: l.times.sort((a,b) => a.t.localeCompare(b.t)),
+      };
+    });
     fs.writeFileSync(`${SCHEDULES_DIR}/${stopId}.json`, JSON.stringify(lines));
     scheduleFileCount++;
   }
