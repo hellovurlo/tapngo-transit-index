@@ -79,7 +79,20 @@ async function main() {
   // exceptions. Good enough for "what time does my bus usually come"; not
   // exact for public holidays.
 
-  console.log('Parsing routes.txt and trips.txt...');
+  console.log('Parsing calendar_dates.txt (exception-based service days)...');
+  // Some services are defined ONLY through date exceptions (no calendar.txt
+  // row at all) — common for special/rare services. Track them as a real,
+  // bounded set of valid dates rather than guessing a weekly pattern.
+  const exceptionAddedDates = new Map(); // service_id -> Set of 'YYYYMMDD' it explicitly runs
+  const exceptionRemovedDates = new Map(); // service_id -> Set of 'YYYYMMDD' it explicitly does NOT run
+  if (fs.existsSync('./gtfs-nl/calendar_dates.txt')) {
+    const cdRaw = parse(fs.readFileSync('./gtfs-nl/calendar_dates.txt'), { columns: true, skip_empty_lines: true });
+    for (const row of cdRaw) {
+      const target = row.exception_type === '1' ? exceptionAddedDates : exceptionRemovedDates;
+      if (!target.has(row.service_id)) target.set(row.service_id, new Set());
+      target.get(row.service_id).add(row.date);
+    }
+  }
   const routesRaw = parse(fs.readFileSync('./gtfs-nl/routes.txt'), { columns: true, skip_empty_lines: true });
   const routeType = new Map(routesRaw.map(r => [r.route_id, r.route_type]));
   const routeShortName = new Map(routesRaw.map(r => [r.route_id, r.route_short_name || r.route_long_name || '']));
@@ -93,7 +106,7 @@ async function main() {
   // stopSchedules: stop_id -> Map("route|headsign" -> { route, headsign, mode, times: [{t, days}] })
   const stopSchedules = new Map();
   const rl = readline.createInterface({ input: fs.createReadStream('./gtfs-nl/stop_times.txt'), crlfDelay: Infinity });
-  let header = null, tripIdx = -1, stopIdx = -1, depIdx = -1, lineCount = 0;
+  let header = null, tripIdx = -1, stopIdx = -1, depIdx = -1, lineCount = 0, unknownServiceTripCount = 0;
   for await (const line of rl) {
     if (!header) {
       header = line.split(',');
@@ -118,7 +131,13 @@ async function main() {
 
     const headsign = tripHeadsign.get(tripId) || '';
     const directionId = tripDirection.get(tripId);
-    const days = serviceDays.get(tripService.get(tripId)) || [true,true,true,true,true,true,true];
+    // If this service has no weekly pattern in calendar.txt, it's either an
+    // exception-only special service, or genuinely unscheduled. Showing it
+    // as if it ran every day was the actual bug behind phantom extra
+    // departures — default to NOT showing it rather than guessing "daily."
+    const serviceId = tripService.get(tripId);
+    const days = serviceDays.get(serviceId) || [false,false,false,false,false,false,false];
+    if (!serviceDays.has(serviceId)) unknownServiceTripCount++;
 
     if (!stopSchedules.has(stopId)) stopSchedules.set(stopId, new Map());
     const perStop = stopSchedules.get(stopId);
@@ -183,6 +202,8 @@ async function main() {
     const src = stops.get(stopId), dst = stops.get(canonical);
     if (src && dst) { for (const m of src.modes) dst.modes.add(m); for (const l of src.lines) dst.lines.add(l); }
   }
+
+  console.log(`Skipped ${unknownServiceTripCount} stop_times rows with no calendar.txt weekly pattern (exception-only or unscheduled services) — hidden rather than guessed as daily.`);
 
   console.log('Writing search index (stops-nl.json)...');
   const stopsOut = [...canonicalIdFor.values()]
