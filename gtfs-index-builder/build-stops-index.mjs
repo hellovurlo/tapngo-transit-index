@@ -193,10 +193,19 @@ async function main() {
       for (const [hs, count] of l.headsignCounts.entries()) {
         if (count > bestCount) { bestHeadsign = hs; bestCount = count; }
       }
-      return {
-        route: l.route, headsign: bestHeadsign, mode: l.mode,
-        times: l.times.sort((a,b) => a.t.localeCompare(b.t)),
-      };
+      // Merging multiple physical stop records (same name/town cluster) can
+      // introduce exact duplicate departures if more than one member record
+      // serves the same route+direction — deduplicate by (time + day pattern)
+      // so "Next" and "Then" never show the identical departure twice.
+      const seen = new Set();
+      const dedupedTimes = [];
+      for (const time of l.times.sort((a,b) => a.t.localeCompare(b.t))) {
+        const sig = `${time.t}|${time.days.join('')}`;
+        if (seen.has(sig)) continue;
+        seen.add(sig);
+        dedupedTimes.push(time);
+      }
+      return { route: l.route, headsign: bestHeadsign, mode: l.mode, times: dedupedTimes };
     });
     fs.writeFileSync(`${SCHEDULES_DIR}/${stopId}.json`, JSON.stringify(lines));
     scheduleFileCount++;
