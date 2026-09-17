@@ -60,6 +60,7 @@ async function main() {
     stops.set(row.stop_id, {
       id: row.stop_id, name: name || raw, town: town || 'Other',
       lat: parseFloat(row.stop_lat), lon: parseFloat(row.stop_lon),
+      parentStation: row.parent_station || null,
       modes: new Set(), lines: new Set(),
     });
   }
@@ -121,33 +122,46 @@ async function main() {
 
     if (!stopSchedules.has(stopId)) stopSchedules.set(stopId, new Map());
     const perStop = stopSchedules.get(stopId);
-    // Group by GTFS direction_id (a stable 0/1 flag), not by headsign text —
-    // operators are inconsistent with headsign wording across trips/snapshots,
-    // which fragments what should be one direction into several. Fall back to
-    // headsign grouping only if this feed doesn't provide direction_id at all.
+    // Group by the route's actual unique GTFS route_id, never by its display
+    // short name — short names like "M4" are NOT guaranteed unique across
+    // the whole country. A different operator's unrelated "M4" landing in
+    // the same merged stop cluster would otherwise silently blend two
+    // completely different bus lines' schedules into one, producing
+    // nonsensical extra departures. shortName is used for display only.
     const key = (directionId === '0' || directionId === '1')
-      ? `${shortName}|dir${directionId}`
-      : `${shortName}|${headsign}`;
+      ? `${routeId}|dir${directionId}`
+      : `${routeId}|${headsign}`;
     if (!perStop.has(key)) perStop.set(key, { route: shortName, headsignCounts: new Map(), mode, times: [] });
     const group = perStop.get(key);
     group.headsignCounts.set(headsign, (group.headsignCounts.get(headsign) || 0) + 1);
     group.times.push({ t: depTime.slice(0,5), days });
   }
 
-  console.log('Merging same-name/town stop pairs (opposite sides of the road) so');
-  console.log('picking a stop shows every direction, not just one physical side...');
-  const clusters = new Map(); // "town|||name" -> [stopId, stopId, ...]
+  console.log('Grouping platforms into one physical stop using GTFS parent_station —');
+  console.log('the data publisher\'s own authoritative field for this, not a guess.');
+  console.log('Stops with no parent_station are left fully separate: no distance or');
+  console.log('name-matching fallback, since neither can be trusted not to wrongly');
+  console.log('blend two genuinely different real stops\' schedules together.');
+
+  const canonicalIdFor = new Map(); // any member stop_id -> the chosen canonical stop_id
+  const parentGroups = new Map(); // parent_station id -> [stop, stop, ...]
   for (const s of stops.values()) {
     if (s.modes.size === 0) continue; // skip inactive stops entirely
-    const key = `${s.town.toLowerCase()}|||${s.name.toLowerCase()}`;
-    if (!clusters.has(key)) clusters.set(key, []);
-    clusters.get(key).push(s.id);
+    if (s.parentStation) {
+      if (!parentGroups.has(s.parentStation)) parentGroups.set(s.parentStation, []);
+      parentGroups.get(s.parentStation).push(s);
+    } else {
+      canonicalIdFor.set(s.id, s.id); // no authoritative grouping info — stands alone
+    }
   }
-  const canonicalIdFor = new Map(); // any member stop_id -> the chosen canonical stop_id
-  for (const members of clusters.values()) {
-    const canonical = members.slice().sort()[0]; // deterministic pick
-    for (const id of members) canonicalIdFor.set(id, canonical);
+  let mergedPairCount = 0;
+  for (const members of parentGroups.values()) {
+    const canonical = members.map(s => s.id).sort()[0];
+    for (const s of members) canonicalIdFor.set(s.id, canonical);
+    mergedPairCount += members.length - 1;
   }
+  console.log(`  Grouped ${mergedPairCount} platform records under a shared parent_station; everything else stands alone.`);
+
   // Merge every member's schedule and line/mode data into the canonical stop.
   const mergedSchedules = new Map(); // canonical stop_id -> Map(key -> group)
   for (const [stopId, perStop] of stopSchedules.entries()) {
