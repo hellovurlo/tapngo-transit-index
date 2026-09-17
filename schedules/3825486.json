@@ -1,1 +1,1 @@
-[{"route":"476","headsign":"Hasselt Station perron 6","mode":"bus","times":[{"t":"07:04","days":[true,true,true,true,true,true,true]}]},{"route":"477","headsign":"Hasselt Handelsschool","mode":"bus","times":[{"t":"07:33","days":[true,true,true,true,true,true,true]}]}]
+[{"route":"476","headsign":"Hasselt Station perron 6","mode":"bus","times":[{"t":"07:04","days":[false,false,false,false,false,false,false]}]},{"route":"477","headsign":"Hasselt Handelsschool","mode":"bus","times":[{"t":"07:33","days":[false,false,false,false,false,false,false]}]}]

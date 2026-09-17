@@ -1,1 +1,1 @@
-[{"route":"67","headsign":"Essen Station","mode":"bus","times":[{"t":"11:21","days":[true,true,true,true,true,true,true]},{"t":"13:21","days":[true,true,true,true,true,true,true]},{"t":"15:21","days":[true,true,true,true,true,true,true]}]}]
+[{"route":"67","headsign":"Essen Station","mode":"bus","times":[{"t":"11:21","days":[false,false,false,false,false,false,false]},{"t":"13:21","days":[false,false,false,false,false,false,false]},{"t":"15:21","days":[false,false,false,false,false,false,false]}]}]

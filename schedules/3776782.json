@@ -1,1 +1,1 @@
-[{"route":"106","headsign":"Tongeren Station Perron 1","mode":"bus","times":[{"t":"16:54","days":[true,true,true,true,true,true,true]},{"t":"16:56","days":[true,true,true,true,true,true,true]}]}]
+[{"route":"106","headsign":"Tongeren Station Perron 1","mode":"bus","times":[{"t":"16:54","days":[false,false,false,false,false,false,false]},{"t":"16:56","days":[false,false,false,false,false,false,false]}]}]

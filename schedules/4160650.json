@@ -1,1 +1,1 @@
-[{"route":"67","headsign":"Kapellen Dorp","mode":"bus","times":[{"t":"12:04","days":[true,true,true,true,true,true,true]},{"t":"14:04","days":[true,true,true,true,true,true,true]},{"t":"16:15","days":[true,true,true,true,true,true,true]}]}]
+[{"route":"67","headsign":"Kapellen Dorp","mode":"bus","times":[{"t":"12:04","days":[false,false,false,false,false,false,false]},{"t":"14:04","days":[false,false,false,false,false,false,false]},{"t":"16:15","days":[false,false,false,false,false,false,false]}]}]

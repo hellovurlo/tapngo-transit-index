@@ -1,1 +1,1 @@
-[{"route":"433","headsign":"Sint-Niklaas Schoolstraat","mode":"bus","times":[{"t":"07:15","days":[true,true,true,true,true,true,true]},{"t":"07:37","days":[true,true,true,true,true,true,true]}]}]
+[{"route":"433","headsign":"Sint-Niklaas Schoolstraat","mode":"bus","times":[{"t":"07:15","days":[false,false,false,false,false,false,false]},{"t":"07:37","days":[false,false,false,false,false,false,false]}]}]

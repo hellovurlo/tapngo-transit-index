@@ -1,1 +1,1 @@
-[{"route":"457","headsign":"Weelde Stwg. op Zondereigen","mode":"bus","times":[{"t":"12:39","days":[true,true,true,true,true,true,true]},{"t":"16:51","days":[true,true,true,true,true,true,true]}]}]
+[{"route":"457","headsign":"Weelde Stwg. op Zondereigen","mode":"bus","times":[{"t":"12:39","days":[false,false,false,false,false,false,false]},{"t":"16:51","days":[false,false,false,false,false,false,false]}]}]
