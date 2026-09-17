@@ -102,6 +102,26 @@ async function main() {
   const tripHeadsign = new Map(tripsRaw.map(t => [t.trip_id, t.trip_headsign || '']));
   const tripDirection = new Map(tripsRaw.map(t => [t.trip_id, t.direction_id]));
 
+  function parseGtfsDate(yyyymmdd) {
+    return new Date(`${yyyymmdd.slice(0,4)}-${yyyymmdd.slice(4,6)}-${yyyymmdd.slice(6,8)}T12:00:00Z`);
+  }
+  const weeklyPatternCache = new Map();
+  function weeklyPatternFromExceptionDates(serviceId, exceptionAddedDates) {
+    if (weeklyPatternCache.has(serviceId)) return weeklyPatternCache.get(serviceId);
+    const dates = exceptionAddedDates.get(serviceId);
+    const days = [false,false,false,false,false,false,false]; // Mon..Sun
+    if (dates) {
+      for (const d of dates) {
+        const weekdayIdx = (parseGtfsDate(d).getUTCDay() + 6) % 7; // Mon=0..Sun=6
+        days[weekdayIdx] = true;
+      }
+    }
+    // If genuinely no exception-add dates exist either, this service has no
+    // evidence of running at all — correctly stays all-false, not a guess.
+    weeklyPatternCache.set(serviceId, days);
+    return days;
+  }
+
   console.log('Streaming stop_times.txt (the big file) — building per-stop timetables...');
   // stopSchedules: stop_id -> Map("route|headsign" -> { route, headsign, mode, times: [{t, days}] })
   const stopSchedules = new Map();
@@ -136,8 +156,16 @@ async function main() {
     // as if it ran every day was the actual bug behind phantom extra
     // departures — default to NOT showing it rather than guessing "daily."
     const serviceId = tripService.get(tripId);
-    const days = serviceDays.get(serviceId) || [false,false,false,false,false,false,false];
-    if (!serviceDays.has(serviceId)) unknownServiceTripCount++;
+    // If calendar.txt has no row for this service, it's very often a
+    // real, regular line published ONLY via calendar_dates.txt (a
+    // legitimate, standard GTFS pattern) — not necessarily rare/special.
+    // Reconstruct its actual weekly pattern from which real calendar dates
+    // it's explicitly added on, rather than guessing "always" or "never."
+    let days = serviceDays.get(serviceId);
+    if (!days) {
+      days = weeklyPatternFromExceptionDates(serviceId, exceptionAddedDates);
+      unknownServiceTripCount++;
+    }
 
     if (!stopSchedules.has(stopId)) stopSchedules.set(stopId, new Map());
     const perStop = stopSchedules.get(stopId);
