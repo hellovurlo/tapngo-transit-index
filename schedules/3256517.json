@@ -1,1 +1,1 @@
-[{"route":"N8","headsign":"Wageningen","mode":"bus","times":[{"t":"26:52","days":[false,false,false,false,false,false,false]},{"t":"29:27","days":[false,false,false,false,false,false,false]},{"t":"29:28","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"N8","headsign":"Wageningen","mode":"bus","times":[{"t":"26:52","days":[false,false,false,false,true,false,false]},{"t":"26:52","days":[false,false,false,false,false,true,false]},{"t":"29:27","days":[false,false,false,false,true,false,false]},{"t":"29:28","days":[false,false,false,false,false,true,false]}]}]

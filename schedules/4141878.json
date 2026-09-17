@@ -1,1 +1,1 @@
-[{"route":"418","headsign":"Gieten via Haren,","mode":"bus","times":[{"t":"26:41","days":[false,false,false,false,false,false,false]},{"t":"28:41","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"418","headsign":"Gieten via Haren,","mode":"bus","times":[{"t":"26:41","days":[false,false,false,true,false,false,false]},{"t":"28:41","days":[false,false,false,true,false,false,false]}]}]

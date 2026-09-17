@@ -1,1 +1,1 @@
-[{"route":"49","headsign":"Lokeren Metaalbewerkersstraat","mode":"bus","times":[{"t":"07:39","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"49","headsign":"Lokeren Metaalbewerkersstraat","mode":"bus","times":[{"t":"07:39","days":[false,true,false,true,true,false,false]},{"t":"07:39","days":[true,true,false,true,true,false,false]}]}]

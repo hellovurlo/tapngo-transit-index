@@ -1,1 +1,1 @@
-[{"route":"235","headsign":"Tongeren Station Perron 2","mode":"bus","times":[{"t":"07:37","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"235","headsign":"Tongeren Station Perron 2","mode":"bus","times":[{"t":"07:37","days":[false,true,false,false,false,false,false]},{"t":"07:37","days":[false,false,false,true,true,false,false]},{"t":"07:37","days":[true,true,false,true,true,false,false]}]}]

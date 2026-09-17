@@ -1,1 +1,1 @@
-[{"route":"N2","headsign":"Wassenaar","mode":"bus","times":[{"t":"26:15","days":[false,false,false,false,false,false,false]},{"t":"28:15","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"N2","headsign":"Wassenaar","mode":"bus","times":[{"t":"26:15","days":[false,false,false,false,false,true,false]},{"t":"26:15","days":[false,false,false,false,true,false,false]},{"t":"28:15","days":[false,false,false,false,false,true,false]},{"t":"28:15","days":[false,false,false,false,true,false,false]}]}]

@@ -1,1 +1,1 @@
-[{"route":"629","headsign":"Tongeren Bewel","mode":"bus","times":[{"t":"07:32","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"629","headsign":"Tongeren Bewel","mode":"bus","times":[{"t":"07:32","days":[false,false,true,false,false,false,false]},{"t":"07:32","days":[false,true,false,true,true,false,false]},{"t":"07:32","days":[true,true,false,true,true,false,false]}]}]

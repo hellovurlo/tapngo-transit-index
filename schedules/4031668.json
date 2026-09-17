@@ -1,1 +1,1 @@
-[{"route":"N1","headsign":"Scheveningen","mode":"bus","times":[{"t":"26:06","days":[false,false,false,false,false,false,false]},{"t":"28:07","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"N1","headsign":"Scheveningen","mode":"bus","times":[{"t":"26:06","days":[false,false,false,false,false,true,false]},{"t":"26:06","days":[false,false,false,false,true,false,false]},{"t":"28:07","days":[false,false,false,false,false,true,false]},{"t":"28:07","days":[false,false,false,false,true,false,false]}]}]

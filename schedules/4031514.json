@@ -1,1 +1,1 @@
-[{"route":"N3","headsign":"Poeldijk","mode":"bus","times":[{"t":"26:28","days":[false,false,false,false,false,false,false]},{"t":"28:28","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"N3","headsign":"Poeldijk","mode":"bus","times":[{"t":"26:28","days":[false,false,false,false,false,true,false]},{"t":"26:28","days":[false,false,false,false,true,false,false]},{"t":"28:28","days":[false,false,false,false,false,true,false]},{"t":"28:28","days":[false,false,false,false,true,false,false]}]}]

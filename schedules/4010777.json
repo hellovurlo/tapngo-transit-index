@@ -1,1 +1,1 @@
-[{"route":"37","headsign":"Wetteren Station perron 2","mode":"bus","times":[{"t":"06:41","days":[false,false,false,false,false,false,false]},{"t":"08:29","days":[false,false,false,false,false,false,false]},{"t":"10:29","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"37","headsign":"Wetteren Station perron 2","mode":"bus","times":[{"t":"06:41","days":[false,false,false,false,false,true,false]},{"t":"08:29","days":[false,false,false,false,false,true,false]},{"t":"10:29","days":[false,false,false,false,false,true,false]}]}]

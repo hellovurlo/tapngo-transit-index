@@ -1,1 +1,1 @@
-[{"route":"456","headsign":"Schiedam Centrum","mode":"bus","times":[{"t":"05:22","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"456","headsign":"Schiedam Centrum","mode":"bus","times":[{"t":"05:22","days":[true,true,true,true,true,false,false]}]}]

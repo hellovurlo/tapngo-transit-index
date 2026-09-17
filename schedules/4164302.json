@@ -1,1 +1,1 @@
-[{"route":"MS4","headsign":"Simpelveld","mode":"train","times":[{"t":"11:47","days":[false,false,false,false,false,false,false]},{"t":"14:17","days":[false,false,false,false,false,false,false]},{"t":"16:47","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"MS4","headsign":"Simpelveld","mode":"train","times":[{"t":"11:47","days":[false,false,true,false,false,true,true]},{"t":"14:17","days":[false,false,true,false,false,true,true]},{"t":"16:47","days":[false,false,true,false,false,true,true]}]}]

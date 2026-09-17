@@ -1,1 +1,1 @@
-[{"route":"564","headsign":"Appingedam","mode":"bus","times":[{"t":"10:21","days":[false,false,false,false,false,false,false]},{"t":"13:21","days":[false,false,false,false,false,false,false]},{"t":"16:51","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"564","headsign":"Appingedam","mode":"bus","times":[{"t":"10:21","days":[false,true,true,true,false,false,false]},{"t":"13:21","days":[false,true,true,true,false,false,false]},{"t":"16:51","days":[false,true,true,true,false,false,false]}]}]

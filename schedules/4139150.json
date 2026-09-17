@@ -1,1 +1,1 @@
-[{"route":"219","headsign":"Lichtaart Gemeentestraat","mode":"bus","times":[{"t":"15:57","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"219","headsign":"Lichtaart Gemeentestraat","mode":"bus","times":[{"t":"15:57","days":[false,false,false,true,true,false,false]},{"t":"15:57","days":[false,true,false,false,false,false,false]},{"t":"15:57","days":[true,true,false,true,true,false,false]}]}]

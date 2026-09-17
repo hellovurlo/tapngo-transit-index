@@ -1,1 +1,1 @@
-[{"route":"429","headsign":"Brugge Station perron B2","mode":"bus","times":[{"t":"14:25","days":[false,false,false,false,false,false,false]},{"t":"16:02","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"429","headsign":"Brugge Station perron B2","mode":"bus","times":[{"t":"14:25","days":[false,false,false,false,true,false,false]},{"t":"16:02","days":[false,false,false,false,true,false,false]}]}]

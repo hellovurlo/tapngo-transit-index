@@ -1,1 +1,1 @@
-[{"route":"462","headsign":"Zonhoven Halveweg","mode":"bus","times":[{"t":"16:14","days":[false,false,false,false,false,false,false]},{"t":"16:15","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"462","headsign":"Zonhoven Halveweg","mode":"bus","times":[{"t":"16:14","days":[false,true,false,false,false,false,false]},{"t":"16:15","days":[false,false,false,true,true,false,false]},{"t":"16:15","days":[true,true,false,true,true,false,false]}]}]

@@ -1,1 +1,1 @@
-[{"route":"206","headsign":"Maastricht Station perron D","mode":"bus","times":[{"t":"09:34","days":[false,false,false,false,false,false,false]},{"t":"09:37","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"206","headsign":"Maastricht Station perron D","mode":"bus","times":[{"t":"09:34","days":[false,false,false,false,true,false,false]},{"t":"09:37","days":[false,false,false,false,true,false,false]}]}]

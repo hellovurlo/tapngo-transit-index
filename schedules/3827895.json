@@ -1,1 +1,1 @@
-[{"route":"30","headsign":"Oostende Station perron 7","mode":"bus","times":[{"t":"21:20","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"30","headsign":"Oostende Station perron 7","mode":"bus","times":[{"t":"21:20","days":[false,true,false,true,false,false,false]},{"t":"21:20","days":[true,true,false,true,false,false,false]}]}]

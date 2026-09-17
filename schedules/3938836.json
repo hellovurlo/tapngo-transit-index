@@ -1,1 +1,1 @@
-[{"route":"805","headsign":"Zetten","mode":"bus","times":[{"t":"26:12","days":[false,false,false,false,false,false,false]},{"t":"27:32","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"805","headsign":"Zetten","mode":"bus","times":[{"t":"26:12","days":[false,false,false,false,false,true,false]},{"t":"27:32","days":[false,false,false,false,false,true,false]}]}]

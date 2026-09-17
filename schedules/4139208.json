@@ -1,1 +1,1 @@
-[{"route":"391","headsign":"Arendonk Pelgrimsplein","mode":"bus","times":[{"t":"15:58","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"391","headsign":"Arendonk Pelgrimsplein","mode":"bus","times":[{"t":"15:58","days":[false,false,false,false,true,false,false]},{"t":"15:58","days":[false,true,false,true,false,false,false]},{"t":"15:58","days":[true,true,false,true,true,false,false]}]}]

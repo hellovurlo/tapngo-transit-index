@@ -1,1 +1,1 @@
-[{"route":"443","headsign":"Kalmthout Gitok 2","mode":"bus","times":[{"t":"07:43","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"443","headsign":"Kalmthout Gitok 2","mode":"bus","times":[{"t":"07:43","days":[false,false,true,false,false,false,false]},{"t":"07:43","days":[false,true,false,true,true,false,false]},{"t":"07:43","days":[true,true,false,true,true,false,false]}]}]

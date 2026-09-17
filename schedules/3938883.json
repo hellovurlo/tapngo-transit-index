@@ -1,1 +1,1 @@
-[{"route":"813","headsign":"Groesbeek","mode":"bus","times":[{"t":"26:40","days":[false,false,false,false,false,false,false]},{"t":"28:10","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"813","headsign":"Groesbeek","mode":"bus","times":[{"t":"26:40","days":[false,false,false,false,false,true,false]},{"t":"28:10","days":[false,false,false,false,false,true,false]}]}]

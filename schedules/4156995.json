@@ -1,1 +1,1 @@
-[{"route":"139","headsign":"Groningen","mode":"bus","times":[{"t":"08:10","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"139","headsign":"Groningen","mode":"bus","times":[{"t":"08:10","days":[false,false,false,true,true,false,false]},{"t":"08:10","days":[true,true,true,false,false,false,false]}]}]

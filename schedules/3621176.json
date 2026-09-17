@@ -1,1 +1,1 @@
-[{"route":"456","headsign":"Den Haag Leyenburg","mode":"bus","times":[{"t":"04:52","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"456","headsign":"Den Haag Leyenburg","mode":"bus","times":[{"t":"04:52","days":[true,true,true,true,true,false,false]}]}]

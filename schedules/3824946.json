@@ -1,1 +1,1 @@
-[{"route":"408","headsign":"Zandhoven Dorp perron 2","mode":"bus","times":[{"t":"16:59","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"408","headsign":"Zandhoven Dorp perron 2","mode":"bus","times":[{"t":"16:59","days":[false,true,false,true,true,false,false]},{"t":"16:59","days":[true,true,false,true,true,false,false]}]}]

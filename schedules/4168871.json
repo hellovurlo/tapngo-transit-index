@@ -1,1 +1,1 @@
-[{"route":"225","headsign":"Zundert Wernhout","mode":"bus","times":[{"t":"15:20","days":[false,false,false,false,false,false,false]},{"t":"16:25","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"225","headsign":"Zundert Wernhout","mode":"bus","times":[{"t":"15:20","days":[true,true,true,true,false,false,false]},{"t":"15:20","days":[false,false,false,false,true,false,false]},{"t":"16:25","days":[true,true,true,true,false,false,false]},{"t":"16:25","days":[false,false,false,false,true,false,false]}]}]

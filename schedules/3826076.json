@@ -1,1 +1,1 @@
-[{"route":"507","headsign":"Sint-Lambrechts-Herk Kruispunt","mode":"bus","times":[{"t":"16:28","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"507","headsign":"Sint-Lambrechts-Herk Kruispunt","mode":"bus","times":[{"t":"16:28","days":[false,true,false,true,true,false,false]},{"t":"16:28","days":[true,true,false,true,true,false,false]}]}]

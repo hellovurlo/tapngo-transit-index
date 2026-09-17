@@ -1,1 +1,1 @@
-[{"route":"909","headsign":"Val-Meer Fallstraat","mode":"bus","times":[{"t":"17:24","days":[false,false,false,false,false,false,false]}]}]
+[{"route":"909","headsign":"Val-Meer Fallstraat","mode":"bus","times":[{"t":"17:24","days":[false,false,false,true,true,false,false]},{"t":"17:24","days":[false,true,false,false,false,false,false]},{"t":"17:24","days":[true,true,false,true,true,false,false]}]}]
