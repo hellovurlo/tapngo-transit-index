@@ -1,1 +1,1 @@
-[{"route":"279","headsign":"Kinrooi Dorpsplein","mode":"bus","times":[{"t":"17:23","days":[false,true,false,true,true,false,false]},{"t":"17:23","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"279","headsign":"Kinrooi Dorpsplein","mode":"bus","times":[{"t":"17:23","days":[false,false,false,true,true,false,false]},{"t":"17:23","days":[true,true,false,true,true,false,false]}]}]

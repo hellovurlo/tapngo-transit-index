@@ -1,1 +1,1 @@
-[{"route":"30","headsign":"Brugge Station perron C7","mode":"bus","times":[{"t":"11:17","days":[false,true,false,true,true,false,false]},{"t":"11:17","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"30","headsign":"Brugge Station perron C7","mode":"bus","times":[{"t":"11:17","days":[false,false,false,true,true,false,false]},{"t":"11:17","days":[true,true,false,true,true,false,false]}]}]

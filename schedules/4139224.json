@@ -1,1 +1,1 @@
-[{"route":"607","headsign":"Sint-Job-in-'t-Goor Lochtenbergplein","mode":"bus","times":[{"t":"16:17","days":[true,true,false,true,false,false,false]},{"t":"16:17","days":[false,true,false,true,false,false,false]},{"t":"17:05","days":[false,false,false,false,true,false,false]}]}]
+[{"route":"607","headsign":"Sint-Job-in-'t-Goor Lochtenbergplein","mode":"bus","times":[{"t":"16:17","days":[true,true,false,true,false,false,false]},{"t":"16:17","days":[false,false,false,true,false,false,false]},{"t":"17:05","days":[false,false,false,false,true,false,false]}]}]

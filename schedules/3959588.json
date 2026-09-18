@@ -1,1 +1,1 @@
-[{"route":"51a","headsign":"Westkerke Marktplein","mode":"bus","times":[{"t":"22:44","days":[true,true,false,true,false,false,false]},{"t":"22:44","days":[false,true,false,true,false,false,false]}]}]
+[{"route":"51a","headsign":"Westkerke Marktplein","mode":"bus","times":[{"t":"22:44","days":[true,true,false,true,false,false,false]},{"t":"22:44","days":[false,false,false,true,false,false,false]}]}]

@@ -1,1 +1,1 @@
-[{"route":"446","headsign":"Oostmalle Kapel RMS","mode":"bus","times":[{"t":"07:48","days":[false,true,false,true,true,false,false]},{"t":"07:48","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"446","headsign":"Oostmalle Kapel RMS","mode":"bus","times":[{"t":"07:48","days":[false,false,false,true,true,false,false]},{"t":"07:48","days":[true,true,false,true,true,false,false]}]}]

@@ -1,1 +1,1 @@
-[{"route":"474","headsign":"Hasselt Station perron 6","mode":"bus","times":[{"t":"16:41","days":[false,true,false,true,true,false,false]},{"t":"16:41","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"474","headsign":"Hasselt Station perron 6","mode":"bus","times":[{"t":"16:41","days":[false,false,false,true,true,false,false]},{"t":"16:41","days":[true,true,false,true,true,false,false]}]}]
