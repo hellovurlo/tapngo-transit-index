@@ -1,1 +1,1 @@
-[{"route":"111","headsign":"Vosselaar Dorp","mode":"bus","times":[{"t":"16:19","days":[false,false,false,true,true,false,false]},{"t":"16:19","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"111","headsign":"Vosselaar Dorp","mode":"bus","times":[{"t":"16:19","days":[false,false,false,false,true,false,false]},{"t":"16:19","days":[true,true,false,true,true,false,false]}]}]

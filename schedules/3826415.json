@@ -1,1 +1,1 @@
-[{"route":"296","headsign":"Lummen Frederickxstraat perron 1","mode":"bus","times":[{"t":"13:09","days":[false,false,true,false,false,false,false]},{"t":"17:02","days":[false,false,false,true,true,false,false]},{"t":"17:02","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"296","headsign":"Lummen Frederickxstraat perron 1","mode":"bus","times":[{"t":"13:09","days":[false,false,true,false,false,false,false]},{"t":"17:02","days":[false,false,false,false,true,false,false]},{"t":"17:02","days":[true,true,false,true,true,false,false]}]}]
