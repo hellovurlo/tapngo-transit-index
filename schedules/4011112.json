@@ -1,1 +1,1 @@
-[{"route":"809","headsign":"Opglabbeek Dorpsplein","mode":"bus","times":[{"t":"16:03","days":[false,false,false,false,true,false,false]},{"t":"16:03","days":[true,true,false,true,true,false,false]},{"t":"16:13","days":[false,false,false,false,true,false,false]},{"t":"16:13","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"809","headsign":"Opglabbeek Dorpsplein","mode":"bus","times":[{"t":"16:03","days":[true,true,false,true,true,false,false]},{"t":"16:13","days":[true,true,false,true,true,false,false]}]}]

@@ -1,1 +1,1 @@
-[{"route":"633","headsign":"Vlissingen Oude Veerhavenweg","mode":"bus","times":[{"t":"08:11","days":[false,false,false,false,true,false,false]},{"t":"08:11","days":[true,false,false,false,false,false,false]},{"t":"08:11","days":[true,true,true,true,true,false,false]}]}]
+[{"route":"633","headsign":"Vlissingen Oude Veerhavenweg","mode":"bus","times":[{"t":"08:11","days":[true,true,true,true,true,false,false]}]}]

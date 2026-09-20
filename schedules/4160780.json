@@ -1,1 +1,1 @@
-[{"route":"72","headsign":"Antwerpen Roosevelt perron C2","mode":"bus","times":[{"t":"07:51","days":[false,false,false,false,true,false,false]},{"t":"12:21","days":[false,false,false,false,true,false,false]},{"t":"19:22","days":[false,false,false,false,false,true,false]}]}]
+[{"route":"72","headsign":"Antwerpen Roosevelt perron C2","mode":"bus","times":[{"t":"19:22","days":[false,false,false,false,false,true,false]}]}]

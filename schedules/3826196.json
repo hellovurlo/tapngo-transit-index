@@ -1,1 +1,1 @@
-[{"route":"316","headsign":"Zonhoven Dorpsplein","mode":"bus","times":[{"t":"07:40","days":[false,false,false,false,true,false,false]},{"t":"07:40","days":[false,false,true,false,false,false,false]},{"t":"07:40","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"316","headsign":"Zonhoven Dorpsplein","mode":"bus","times":[{"t":"07:40","days":[false,false,true,false,false,false,false]},{"t":"07:40","days":[true,true,false,true,true,false,false]}]}]
