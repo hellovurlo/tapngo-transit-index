@@ -1,1 +1,1 @@
-[{"route":"Nightjet","headsign":"Zürich HB","mode":"train","times":[{"t":"24:04","days":[true,true,true,false,false,false,true]},{"t":"24:04","days":[true,true,true,false,false,false,false]}]}]
+[{"route":"Nightjet","headsign":"Zürich HB","mode":"train","times":[{"t":"24:04","days":[true,true,true,false,false,false,true]},{"t":"24:04","days":[false,true,true,false,false,false,false]}]}]
