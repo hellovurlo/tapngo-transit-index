@@ -1,1 +1,1 @@
-[{"route":"bB","headsign":"Streefkerk","mode":"bus","times":[{"t":"20:28","days":[false,true,true,true,true,false,false]},{"t":"21:25","days":[false,true,true,true,true,false,false]},{"t":"22:25","days":[false,true,true,true,true,false,false]}]}]
+[{"route":"bB","headsign":"Streefkerk","mode":"bus","times":[{"t":"20:28","days":[false,false,true,true,true,false,false]},{"t":"21:25","days":[false,false,true,true,true,false,false]},{"t":"22:25","days":[false,false,true,true,true,false,false]}]}]
