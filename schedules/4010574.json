@@ -1,1 +1,1 @@
-[{"route":"218","headsign":"Turnhout Warande perron 1","mode":"bus","times":[{"t":"15:55","days":[false,true,false,true,true,false,false]},{"t":"15:55","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"218","headsign":"Turnhout Warande perron 1","mode":"bus","times":[{"t":"15:55","days":[false,false,false,true,true,false,false]},{"t":"15:55","days":[true,true,false,true,true,false,false]}]}]

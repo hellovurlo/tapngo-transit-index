@@ -1,1 +1,1 @@
-[{"route":"633","headsign":"Maaseik Campus Mosa-RT Afstaphalte","mode":"bus","times":[{"t":"07:34","days":[false,false,true,false,false,false,false]},{"t":"07:34","days":[false,true,false,true,true,false,false]},{"t":"07:34","days":[true,true,false,true,true,false,false]}]}]
+[{"route":"633","headsign":"Maaseik Campus Mosa-RT Afstaphalte","mode":"bus","times":[{"t":"07:34","days":[false,false,true,false,false,false,false]},{"t":"07:34","days":[false,false,false,true,true,false,false]},{"t":"07:34","days":[true,true,false,true,true,false,false]}]}]
