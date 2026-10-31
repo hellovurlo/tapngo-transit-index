@@ -1,0 +1,1 @@
+[{"route":"20","headsign":"Oostkamp Cardijnplein","mode":"bus","times":[{"t":"16:19","days":[true,true,false,true,false,false,false]},{"t":"16:29","days":[false,false,false,false,true,false,false]}]},{"route":"211","headsign":"Ruddervoorde Baliebrugge Kerk","mode":"bus","times":[{"t":"12:34","days":[true,true,false,true,false,false,false]}]}]
