@@ -1,0 +1,1 @@
+[{"route":"GoVolta","headsign":"Paris-Nord","mode":"train","times":[{"t":"11:42","days":[true,true,true,true,false,false,false]},{"t":"11:42","days":[false,false,false,false,false,true,false]},{"t":"11:42","days":[false,false,false,false,false,false,true]},{"t":"11:42","days":[false,false,false,false,true,false,false]}]}]

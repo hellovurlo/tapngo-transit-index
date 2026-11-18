@@ -1,1 +1,1 @@
-[{"route":"N50","headsign":"Den Oever Busstation","mode":"bus","times":[{"t":"24:48","days":[false,false,false,false,false,true,false]},{"t":"27:43","days":[false,false,false,false,false,true,false]}]}]
+[{"route":"N50","headsign":"Den Oever Busstation","mode":"bus","times":[{"t":"24:48","days":[false,false,false,false,false,true,false]},{"t":"24:48","days":[false,true,false,false,false,true,false]},{"t":"27:43","days":[false,false,false,false,false,true,false]},{"t":"27:43","days":[false,true,false,false,false,true,false]}]}]
